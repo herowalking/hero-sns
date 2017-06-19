@@ -1,12 +1,16 @@
 <template>
   <div class="hello">
     <el-table :data="list">
-      <el-table-column prop="id" label="id" width="180"></el-table-column>
-      <el-table-column prop="username" label="用户名" width="180"></el-table-column>
-      <el-table-column prop="nickname" label="用户昵称" width="180"></el-table-column>
-      <el-table-column prop="password" label="密码" width="180"></el-table-column>
-      <el-table-column prop="createdAt" label="创建时间" width="180"></el-table-column>
-      <el-table-column prop="updatedAt" label="更新时间" width="180"></el-table-column>
+      <el-table-column prop="id" label="id"></el-table-column>
+      <el-table-column prop="username" label="用户名">
+        <template scope="scope">
+          <router-link to="'/' + scope.row.id">{{scope.row.username}}</router-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="nickname" label="用户昵称"></el-table-column>
+      <el-table-column prop="password" label="密码"></el-table-column>
+      <el-table-column prop="createdAt" label="创建时间"></el-table-column>
+      <el-table-column prop="updatedAt" label="更新时间"></el-table-column>
     </el-table>
   </div>
 </template>
