@@ -2,7 +2,7 @@
  * Created by Lincoln on 6/11/2017.
  */
 
-var config = require('./config.js');
+var config = require('./config');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('hero_sns', config.username, config.password);
 

@@ -34,7 +34,7 @@ router.get('/detail', function (req, res) {
             var jsonObj = [];
             for(var i=0; i<results.length; i++) {
                 var obj = results[i].dataValues;
-                console.log(obj);
+                // console.log(obj);
                 obj.user = {};
                 obj.user.username = obj.username;
                 obj.user.nickname = obj.nickname;

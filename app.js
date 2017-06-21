@@ -5,8 +5,12 @@
 var express = require('express');
 var app = express();
 var cors = require('cors');
+var bodyParser = require('body-parser');
 
 app.set('json spaces', 4);
+app.use(bodyParser({
+    urlencoded:false
+}));
 
 var user = require('./apps/user');
 var post = require('./apps/post');
