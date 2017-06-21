@@ -1,10 +1,10 @@
 <template>
   <div class="hello">
-    <el-table :data="list">
+    <el-table :data="list" border>
       <el-table-column prop="id" label="id"></el-table-column>
       <el-table-column prop="username" label="用户名">
         <template scope="scope">
-          <router-link to="'/' + scope.row.id">{{scope.row.username}}</router-link>
+          <router-link :to=" 'user/' + scope.row.id">{{scope.row.username}}</router-link>
         </template>
       </el-table-column>
       <el-table-column prop="nickname" label="用户昵称"></el-table-column>

@@ -8,7 +8,7 @@ import request from 'superagent'
 export function detail(id, cb) {
   request.get(host + 'user/'  + id + '/detail')
     .end((err, res)=>{
-      cb(res, body);
+      cb(res.body);
     });
 }
 

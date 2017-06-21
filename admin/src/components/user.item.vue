@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="user-item">
     <h1>{{username}}</h1>
     <h3>文章列表</h3>
     <el-form :inline = 'true'>
@@ -12,7 +12,7 @@
       </el-form-item>
       <!--删除文章-->
       <el-form-item>
-        <el-button type="danger">删除文章</el-button>
+        <el-button type="danger" @click="deletePost.visible=true">删除文章</el-button>
       </el-form-item>
     </el-form>
 
@@ -31,7 +31,16 @@
       </span>
     </el-dialog>
 
-    <el-table :data="post" border>
+    <el-dialog
+      title="提示" :visible="deletePost.visible" size="tiny" :before-close="handleClose">
+      <span>是否确定删除</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="deletePost = false">取 消</el-button>
+        <el-button type="primary" @click="handleDeletePost">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <el-table :data="post" border @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
       <el-table-column prop="content" label="内容"></el-table-column>
@@ -72,6 +81,9 @@ export default {
           title: '',
           content: ''
       },
+      deletePost: {
+        visible: false,
+      },
       addFriend: {
           visible: false,
           friendId: '-1'
@@ -79,20 +91,21 @@ export default {
       id: '-1',
       username: '',
       nickname: '',
-      log: '',
+      logo: '',
       createdAt: '',
       updatedAt: '',
       post: [],
       friend: [],
       allUser: []
     }
+
   },
   methods: {
       fetch() {
         detail(this.id, (item)=>{
             this.username = item.username,
             this.nickname = item.nickname,
-            this.log = item.log,
+            this.logo = item.logo,
             this.createdAt = item.createdAt,
             this.updatedAt = item.updatedAt,
             this.post = item.post,
@@ -108,6 +121,21 @@ export default {
               this.addPost.visible = false;
           });
       },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+        console.log(val[0].id);
+
+      },
+      handleDeletePost() {
+
+      },
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
       isFriend(id) {
           return !!this.friend.find((user)=>{
               return user.id == id;
@@ -116,7 +144,7 @@ export default {
   },
   mounted() {
       console.log(this.$router, this.$router);
-      this.id = this.$router.params.id;
+      this.id = this.$route.params.id;
       this.fetch();
 
       get_all_user((list)=>{
